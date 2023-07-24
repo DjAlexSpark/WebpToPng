@@ -63,10 +63,12 @@ public class HelloController implements Initializable {
         File defaultDirectory = new File("C:\\");
         chooser.setInitialDirectory(defaultDirectory);
         File selectedDirectory = chooser.showDialog(stage);
+
+        if (selectedDirectory!=null){
         if (selectedDirectory.exists()){
             textFieldDirectoryInto.setText(selectedDirectory.getAbsolutePath());
             textFieldDirectoryInto.setStyle("");
-        }
+        }}
     }
 
     @FXML
@@ -100,7 +102,35 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        buttonStart.setOnAction(event->{
 
+
+            if (!textFieldOutputName.getText().trim().isEmpty()&&
+                    Files.isRegularFile(Path.of(textFieldWithName.getText().trim()))&&
+                    !textFieldDirectoryInto.getText().isEmpty()&&Files.exists(Path.of(textFieldDirectoryInto.getText().trim()))){
+                System.out.println("начинаем ебашить");
+            }else {if (textFieldWithName.getText().isEmpty()) {
+                textFieldWithName.setStyle("-fx-border-color:red");
+            }else {
+                textFieldWithName.setStyle("");
+            }
+                if (textFieldOutputName.getText().isEmpty()) {
+                    textFieldOutputName.setStyle("-fx-border-color:red");
+                }else {
+                    textFieldOutputName.setStyle("");
+                }
+                if (textFieldDirectoryInto.getText().isEmpty()) {
+                    textFieldDirectoryInto.setStyle("-fx-border-color:red");
+                }else {
+                    textFieldDirectoryInto.setStyle("");
+                }}
+            // имя исходника
+//            textFieldOutputName //выходное имя
+//            textFieldDirectoryInto//имя выходной папки
+            //2 запуск  конверта
+            
+            
+        });
 
 
     }
