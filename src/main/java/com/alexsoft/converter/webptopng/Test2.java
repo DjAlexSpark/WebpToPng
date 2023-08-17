@@ -13,6 +13,7 @@ public class Test2 {
             BufferedImage transparentImage =
                     new BufferedImage(imageToRead.getWidth(), imageToRead.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = transparentImage.createGraphics();
+
             g2d.drawImage(imageToRead, 0, 0, null);
             g2d.dispose();
             ImageIO.write(transparentImage, "png", new File("orig.png"));

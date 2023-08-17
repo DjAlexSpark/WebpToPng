@@ -8,12 +8,17 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
+
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +44,9 @@ public class HelloController implements Initializable {
 
     @FXML
     private URL location;
+
+    @FXML
+    private Label statusLabel;
 
     @FXML
     private AnchorPane anchorPane;
@@ -108,13 +116,14 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonStart.setOnAction(event->{
+            buttonStart.setDisable(true);
             if (!textFieldOutputName.getText().trim().isEmpty()&&
                     Files.isRegularFile(Path.of(textFieldWithName.getText().trim()))&&
                     !textFieldDirectoryInto.getText().isEmpty()&&Files.exists(Path.of(textFieldDirectoryInto.getText().trim()))){
                 //процесс конвертации тут
                 Path pathOfInputFile = Path.of(textFieldWithName.getText());
                 Path pathOfOutputFile = (Path.of(textFieldDirectoryInto.getText()))
-                        .normalize().resolve(textFieldOutputName.getText()).resolve(".png");
+                        .normalize().resolve(textFieldOutputName.getText().concat(".png"));
                 File fileOfInputFile = new File(pathOfInputFile.toUri());
                 File fileOfOutputFile = new File(pathOfOutputFile.toUri());
                 try {
@@ -148,8 +157,28 @@ public class HelloController implements Initializable {
 //            textFieldOutputName //выходное имя
 //            textFieldDirectoryInto//имя выходной папки
             //2 запуск  конверта
-            
-            
+
+            buttonStart.setDisable(false);
+            statusLabel.setText("Конвертирование завершено");
+            Task<Void> sleeper = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        Thread.sleep(3500);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    statusLabel.setText("");
+                }
+            });
+            Thread thread = new Thread(sleeper);
+            thread.setDaemon(true);
+            thread.start();
         });
 
 
