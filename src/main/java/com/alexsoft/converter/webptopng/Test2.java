@@ -9,13 +9,14 @@ import java.io.IOException;
 public class Test2 {
     public static void main(String[] args) {
         try {
-            BufferedImage imageToRead = ImageIO.read(new File("sample1.webp"));
+            BufferedImage imageToRead = ImageIO.read(new File("orig.webp"));
             BufferedImage transparentImage =
                     new BufferedImage(imageToRead.getWidth(), imageToRead.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = transparentImage.createGraphics();
+
             g2d.drawImage(imageToRead, 0, 0, null);
             g2d.dispose();
-            ImageIO.write(transparentImage, "png", new File("sample1.png"));
+            ImageIO.write(transparentImage, "png", new File("orig.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

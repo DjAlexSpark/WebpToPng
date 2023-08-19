@@ -6,9 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="628.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alexsoft.converter.webptopng.HelloController">
-   <children>
+
       <TextField fx:id="textFieldWithName" focusTraversable="false" layoutX="113.0" layoutY="56.0" onKeyTyped="#textFieldTakeFileFromOnKeyTyped" prefHeight="30.0" prefWidth="374.0" promptText="C:\Мой_файл.webp">
          <font>
             <Font size="14.0" />
@@ -59,5 +58,10 @@
             <Font size="17.0" />
          </font>
       </Label>
-   </children>
+   <Label fx:id="statusLabel" layoutX="291.0" layoutY="254.0" prefHeight="26.0" prefWidth="324.0" textFill="#ff9400">
+      <font>
+         <Font size="17.0" />
+      </font>
+   </Label>
+
 </AnchorPane>
